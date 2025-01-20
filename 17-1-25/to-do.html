@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 70vh;
+        }
+
+        .app {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-height: 200px;
+            overflow-y: auto;
+            
+        }
+
+        li {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li button {
+            background-color: #f44336;
+            border: none;
+            color: white;
+            cursor: pointer;
+        }
+
+        li button:hover {
+            background-color: #e53935;
+        }
+        #addTaskButton{
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <h1>To-Do List</h1>
+        <input type="text" id="taskInput" placeholder="Add a new task" />
+        <button id="addTaskButton">Add Task</button>
+        <ul id="taskList"></ul>
+    </div>
+
+    <script>
+        // Select the input field, button, and task list
+        const taskInput = document.getElementById('taskInput');
+        const addTaskButton = document.getElementById('addTaskButton');
+        const taskList = document.getElementById('taskList');
+
+        // Function to add a task
+        function addTask() {
+            const taskText = taskInput.value.trim(); // Get input value and remove extra spaces
+
+            if (taskText === '') return; // Don't add empty tasks
+
+            // Create a new list item (li) element
+            const listItem = document.createElement('li');
+            
+            // Create the text node and append it to the list item
+            listItem.textContent = taskText;
+
+            // Create a delete button for each task
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Delete';
+            
+            // Add an event listener to delete the task
+            deleteButton.addEventListener('click', () => {
+                taskList.removeChild(listItem); // Remove the task from the list
+            });
+
+            // Append the delete button to the list item
+            listItem.appendChild(deleteButton);
+
+            // Append the list item to the task list
+            taskList.appendChild(listItem);
+
+            // Clear the input field after adding the task
+            taskInput.value = '';
+        }
+
+        // Add event listener to the "Add Task" button
+        addTaskButton.addEventListener('click', addTask);
+
+        // Allow user to press "Enter" to add a task
+        taskInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                addTask();
+            }
+        });
+    </script>
+</body>
+</html>
